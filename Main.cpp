@@ -4,6 +4,7 @@ using namespace std;
 
 void conductExperiment( int, int);
 int linearSearch( int*, int*);
+int binarySearch( int*, int, int, int);
 
 int main() {
     // Parameters
@@ -20,6 +21,24 @@ int main() {
     }
 
     return 0;
+}
+
+int binarySearch( int* arr, int low, int high, int key ) {
+    if ( low > high ) {
+        return -1;
+    }
+
+    int mid = (low + high) / 2;
+    
+    if ( arr[mid] == key ) {
+        return mid;
+    }
+
+    if ( arr[mid] > key ) {
+        return binarySearch( arr, low, mid - 1, key );
+    }
+
+    return binarySearch( arr, mid + 1, high, key );
 }
 
 int linearSearch( int* array1, int array1Size, int* array2, int array2Size ) {
