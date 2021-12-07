@@ -43,6 +43,16 @@ int frequencyTable( int* array1, int array1Size, int* array2, int array2Size ) {
         freqTable[ array1[i]]++;
     }
 
+    // Traverse Array 2 and search for each element of Array 2 in the frequency table of Array 1
+    for ( int i = 0; i < array2Size; i++ ) {
+        if ( freqTable[ array2[i]] ) {
+            freqTable[ array2[i]]--;
+        }
+        else {
+            return 0;
+        }
+    }
+
     delete [] freqTable;
     return 1;
 }
@@ -102,7 +112,7 @@ void conductExperiment( int nInput, int mInput) {
     // Time Variable(s)
     clock_t startTime;
     double duration;
-    int k = 10;
+    int k = 1000;
 
     // Parameters
     int n = nInput;
@@ -125,15 +135,14 @@ void conductExperiment( int nInput, int mInput) {
     for ( int i = 0; i < n; i++ ) {
         arr1[i] = i;
     }
-
+    
     /*for ( int i = 0; i < n; i++ ) { // For array validation
         cout << i << ": " << arr1[i] << endl;
     }*/
 
     for ( int i = 0; i < m; i++ ) {
-        arr2[i] = i;
+        arr2[i] = arr1[(n - 1) - m + i];
     }
-    arr2[m - 1] = 2 * n;
 
     /*for ( int i = 0; i < m; i++ ) { // For array validation
         cout << i << ": " << arr2[i] << endl;
@@ -142,18 +151,16 @@ void conductExperiment( int nInput, int mInput) {
 
     // Conducting the experiment
     cout << endl;
-    
+
     // #####################
     // ### LINEAR SEARCH ###
     // #####################
     startTime = clock();
 
-    for ( int i = 0; i < k; i++ ) {
-        linearSearch(arr1, n, arr2, m);
-    }
+    linearSearch(arr1, n, arr2, m);
 
     duration = 1000 * double( clock() - startTime ) / CLOCKS_PER_SEC;
-    cout << "Linear Search(n = " << n << ", m = " << m << "): " << (duration / k) << " milliseconds." << linearSearch(arr1, n, arr2, m) << endl;
+    cout << "Linear Search(n = " << n << ", m = " << m << "): " << duration << " milliseconds." << linearSearch(arr1, n, arr2, m) << endl;
 
     // #####################
     // ### BINARY SEARCH ###
@@ -172,12 +179,10 @@ void conductExperiment( int nInput, int mInput) {
     // #######################
     startTime = clock();
 
-    for ( int i = 0; i < k; i++ ) {
-        //binarySearchArray(arr1, n, arr2, m);
-    }
+    frequencyTable(arr1, n, arr2, m);
 
     duration = 1000 * double( clock() - startTime ) / CLOCKS_PER_SEC;
-    //cout << "Binary Search(n = " << n << ", m = " << m << "): " << (duration / k) << " milliseconds." << binarySearchArray(arr1, n, arr2, m) << endl;
+    cout << "Frequency Table(n = " << n << ", m = " << m << "): " << duration << " milliseconds." << frequencyTable(arr1, n, arr2, m) << endl;
     
     delete [] arr1;
     delete [] arr2;
