@@ -3,8 +3,9 @@
 using namespace std;
 
 void conductExperiment( int, int);
-int linearSearch( int*, int*);
+int linearSearch( int*, int, int*, int);
 int binarySearch( int*, int, int, int);
+int binarySearchArray( int*, int, int*, int);
 
 int main() {
     // Parameters
@@ -21,6 +22,16 @@ int main() {
     }
 
     return 0;
+}
+
+int binarySearchArray( int* array1, int array1Size, int* array2, int array2Size ) {
+    for ( int i = 0; i < array2Size; i++ ) { // For each element in Array 2
+        if ( 1 + binarySearch( array1, 0, array1Size, array2[i]) ) { // Search for the element in Array 1 using Binary Search
+            return 0;
+        }
+    }
+
+    return 1;
 }
 
 int binarySearch( int* arr, int low, int high, int key ) {
@@ -44,9 +55,9 @@ int binarySearch( int* arr, int low, int high, int key ) {
 int linearSearch( int* array1, int array1Size, int* array2, int array2Size ) {
     bool itemFound = false;
 
-    for ( int i = 0; i < array2Size; i++ ) {
-        for ( int j = 0; j < array1Size && !itemFound; j++ ) {
-            if ( array1[j] == array2[i] ) {
+    for ( int i = 0; i < array2Size; i++ ) { // For each element in Array 2
+        for ( int j = 0; j < array1Size && !itemFound; j++ ) { // For each element in Array 1
+            if ( array1[j] == array2[i] ) { // Search for the element in Array 1
                 itemFound = true;
             }
         }
