@@ -26,7 +26,8 @@ int main() {
 
 int binarySearchArray( int* array1, int array1Size, int* array2, int array2Size ) {
     for ( int i = 0; i < array2Size; i++ ) { // For each element in Array 2
-        if ( 1 + binarySearch( array1, 0, array1Size, array2[i]) ) { // Search for the element in Array 1 using Binary Search
+        if ( !(1 + binarySearch( array1, 0, array1Size, array2[i])) ) { // Search for the element in Array 1 using Binary Search
+            // If the element does not exist, return false (0);
             return 0;
         }
     }
@@ -76,6 +77,7 @@ int linearSearch( int* array1, int array1Size, int* array2, int array2Size ) {
 void conductExperiment( int nInput, int mInput) {
     // ARRAY RANGES ARE [0, nInput);
     // Time Variable(s)
+    clock_t startTime;
     double duration;
     int k = 10;
 
@@ -115,21 +117,31 @@ void conductExperiment( int nInput, int mInput) {
     // Setting up the arrays complete
 
     // Conducting the experiment
+    cout << endl;
+
     // #####################
     // ### LINEAR SEARCH ###
     // #####################
-    clock_t startTime = clock();
+    startTime = clock();
 
     for ( int i = 0; i < k; i++ ) {
         linearSearch(arr1, n, arr2, m);
     }
 
     duration = 1000 * double( clock() - startTime ) / CLOCKS_PER_SEC;
-    cout << "Linear Search(n = " << n << ", m = " << m << "): " << (duration / k) << " milliseconds." << endl;
+    cout << "Linear Search(n = " << n << ", m = " << m << "): " << (duration / k) << " milliseconds." << linearSearch(arr1, n, arr2, m) << endl;
 
     // #####################
     // ### BINARY SEARCH ###
     // #####################
+    startTime = clock();
+
+    for ( int i = 0; i < k; i++ ) {
+        binarySearchArray(arr1, n, arr2, m);
+    }
+
+    duration = 1000 * double( clock() - startTime ) / CLOCKS_PER_SEC;
+    cout << "Binary Search(n = " << n << ", m = " << m << "): " << (duration / k) << " milliseconds." << binarySearchArray(arr1, n, arr2, m) << endl;
 
     delete [] arr1;
     delete [] arr2;
