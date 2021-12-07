@@ -6,6 +6,7 @@ void conductExperiment( int, int);
 int linearSearch( int*, int, int*, int);
 int binarySearch( int*, int, int, int);
 int binarySearchArray( int*, int, int*, int);
+int frequencyTable( int*, int, int*, int);
 
 int main() {
     // Parameters
@@ -13,6 +14,7 @@ int main() {
     int m = 1000;
 
     // Program Code
+
     for ( int i = 0; i < 2; i++ ) {
         for ( int j = 0; j < 10; j++ ) {
             conductExperiment( (j + 1) * n, m);
@@ -22,6 +24,27 @@ int main() {
     }
 
     return 0;
+}
+
+int frequencyTable( int* array1, int array1Size, int* array2, int array2Size ) {
+    // Find maximum value of Array 1
+    int maxArr1 = 0;
+    for ( int i = 0; i < array1Size; i++ ) {
+        if ( array1[i] > maxArr1 ) {
+            maxArr1 = array1[i];
+        }
+    }
+
+    // Initialize the frequency table
+    int* freqTable = new int[maxArr1 + 1];
+    
+    // Find frequency of each unique element in Array 1
+    for ( int i = 0; i < array1Size; i++ ) {
+        freqTable[ array1[i]]++;
+    }
+
+    delete [] freqTable;
+    return 1;
 }
 
 int binarySearchArray( int* array1, int array1Size, int* array2, int array2Size ) {
@@ -110,6 +133,7 @@ void conductExperiment( int nInput, int mInput) {
     for ( int i = 0; i < m; i++ ) {
         arr2[i] = i;
     }
+    arr2[m - 1] = 2 * n;
 
     /*for ( int i = 0; i < m; i++ ) { // For array validation
         cout << i << ": " << arr2[i] << endl;
@@ -118,7 +142,7 @@ void conductExperiment( int nInput, int mInput) {
 
     // Conducting the experiment
     cout << endl;
-
+    
     // #####################
     // ### LINEAR SEARCH ###
     // #####################
@@ -143,6 +167,18 @@ void conductExperiment( int nInput, int mInput) {
     duration = 1000 * double( clock() - startTime ) / CLOCKS_PER_SEC;
     cout << "Binary Search(n = " << n << ", m = " << m << "): " << (duration / k) << " milliseconds." << binarySearchArray(arr1, n, arr2, m) << endl;
 
+    // #######################
+    // ### FREQUENCY TABLE ###
+    // #######################
+    startTime = clock();
+
+    for ( int i = 0; i < k; i++ ) {
+        //binarySearchArray(arr1, n, arr2, m);
+    }
+
+    duration = 1000 * double( clock() - startTime ) / CLOCKS_PER_SEC;
+    //cout << "Binary Search(n = " << n << ", m = " << m << "): " << (duration / k) << " milliseconds." << binarySearchArray(arr1, n, arr2, m) << endl;
+    
     delete [] arr1;
     delete [] arr2;
 }
